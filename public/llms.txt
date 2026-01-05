@@ -1,0 +1,6 @@
+# Anupam Ojha
+Role: Staff / Principal Platform Engineer
+Focus: Cloud-native architectures, Service Mesh (Istio), and ML-driven Observability.
+
+## Active Projects
+- SLO Guardian: Real-time risk scoring using cloud-native ML inference.
