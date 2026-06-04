@@ -36,7 +36,7 @@ EDUCATION:
 NOTABLE PROJECT: Built Sentinel — an autonomous CVE remediation agent that forks repos, patches build files and source code via LLM, verifies in an isolated Docker sandbox, and opens PRs automatically. Supports Java (Maven/Gradle) and Python.
 `.trim();
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   const body = await request.json().catch(() => null);
   if (!body?.jobDescription) {
     return new Response(JSON.stringify({ error: 'Missing jobDescription' }), {
@@ -45,7 +45,10 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const apiKey = import.meta.env.ANTHROPIC_API_KEY;
+  // Cloudflare Workers exposes secrets via locals.runtime.env at request time;
+  // import.meta.env is used as fallback for local dev
+  const runtime = (locals as any).runtime;
+  const apiKey = runtime?.env?.ANTHROPIC_API_KEY ?? import.meta.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return new Response(JSON.stringify({ fallback: true }), {
       status: 200,
