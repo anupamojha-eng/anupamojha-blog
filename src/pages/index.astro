@@ -70,15 +70,43 @@
             </a>
           </div>
         </div>
+        <div class="sentinel-otel">
+          <p class="sentinel-prs-label">Observability</p>
+          <p class="sentinel-otel-desc">Every run emits OTel traces and metrics. Ships to any backend via OTLP — Grafana, Datadog, Honeycomb. Prints a token cost report at the end of each run.</p>
+          <div class="otel-grid">
+            <div class="otel-card">
+              <p class="otel-card-title">Traces</p>
+              <ul class="otel-list">
+                <li><code>sentinel.remediation</code> — root span</li>
+                <li><code>sentinel.scan</code> — OSV API scan</li>
+                <li><code>sentinel.patch</code> — LLM patching</li>
+                <li><code>sentinel.verify</code> — Docker sandbox</li>
+                <li><code>sentinel.pr_create</code> — GitHub PR</li>
+              </ul>
+            </div>
+            <div class="otel-card">
+              <p class="otel-card-title">Metrics</p>
+              <ul class="otel-list">
+                <li><code>cves_found_total</code></li>
+                <li><code>patch_attempts_total</code></li>
+                <li><code>pr_opened_total</code></li>
+                <li><code>llm_tokens_total</code> — by model, stage, repo</li>
+                <li><code>llm_cost_usd_total</code> — with cache savings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <div class="tags">
           <span class="tag">Python</span>
           <span class="tag">Java</span>
           <span class="tag">Docker</span>
           <span class="tag">LLM</span>
           <span class="tag">DevSecOps</span>
+          <span class="tag">OpenTelemetry</span>
           <span class="tag">Anthropic Claude</span>
           <span class="tag">Google Gemini</span>
           <span class="tag">OSV API</span>
+          <span class="tag">PyPI</span>
         </div>
       </div>
     </div>
@@ -398,6 +426,20 @@
   }
   .pr-badge.python { background: #fef3c7; color: #92400e; }
   .pr-badge.java { background: #fee2e2; color: #991b1b; }
+
+  /* OTel */
+  .sentinel-otel { margin-bottom: 22px; }
+  .sentinel-otel-desc { font-size: 0.88rem; color: var(--text-soft); margin-bottom: 14px; line-height: 1.55; }
+  .otel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .otel-card {
+    background: var(--bg-alt); border: 1px solid var(--border);
+    border-radius: 7px; padding: 14px 16px;
+  }
+  .otel-card-title { font-size: 0.78rem; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+  .otel-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .otel-list li { font-size: 0.83rem; color: var(--text-soft); }
+  .otel-list code { font-size: 0.78rem; background: var(--border); padding: 1px 5px; border-radius: 3px; color: var(--accent); font-family: monospace; }
+  @media (max-width: 640px) { .otel-grid { grid-template-columns: 1fr; } }
 
   /* Tags */
   .tags { display: flex; flex-wrap: wrap; gap: 7px; }
