@@ -7,8 +7,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>Anupam Ojha — Platform & Infrastructure Engineer</title>
-  <meta name="description" content="Senior Platform & Infrastructure Engineer with 15+ years building secure, scalable Kubernetes infrastructure and DevSecOps pipelines." />
+  <title>Anupam Ojha — Platform, Infrastructure & AI Inference Engineer</title>
+  <meta name="description" content="Senior Platform & Infrastructure Engineer with 15+ years building secure, scalable Kubernetes infrastructure, DevSecOps pipelines, and production LLM inference systems." />
 </head>
 <body>
 
@@ -29,9 +29,9 @@
 
   <section class="hero">
     <div class="container">
-      <p class="hero-eyebrow">Senior Platform &amp; Infrastructure Engineer</p>
+      <p class="hero-eyebrow">Senior Platform, Infrastructure &amp; AI Inference Engineer</p>
       <h1 class="hero-name">Anupam Ojha</h1>
-      <p class="hero-bio">15+ years building secure, scalable platform infrastructure. Kubernetes orchestration, OpenTelemetry observability, and DevSecOps at Ford Motor Company and GE Healthcare.</p>
+      <p class="hero-bio">15+ years building secure, scalable platform infrastructure. Kubernetes orchestration, OpenTelemetry observability, and DevSecOps at Ford Motor Company and GE Healthcare. Currently building production agentic AI systems with multi-provider LLM inference, prompt-cache optimization, and on-device model fine-tuning.</p>
       <div class="hero-actions">
         <a href="https://github.com/anupamojha-eng" target="_blank" rel="noopener" class="btn btn-primary">GitHub</a>
         <a href="https://www.linkedin.com/in/anupamojha" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
@@ -50,13 +50,49 @@
           </div>
           <a href="https://github.com/anupamojha-eng/agentic-remediation-factory" target="_blank" rel="noopener" class="btn btn-outline btn-sm">View on GitHub →</a>
         </div>
-        <p class="sentinel-desc">Most security tools find vulnerabilities. Sentinel fixes them — autonomously, with a verified PR.</p>
+        <p class="sentinel-desc">Most security tools find vulnerabilities. Sentinel fixes them — autonomously, with a verified PR. Three CLI commands cover the full remediation surface.</p>
+        <div class="sentinel-commands">
+          <div class="cmd-pill"><code>sentinel fix</code> <span>— fix CVEs in a single repo, end-to-end</span></div>
+          <div class="cmd-pill"><code>sentinel scan-org</code> <span>— scan every repo in a GitHub org, generate an HTML report</span></div>
+          <div class="cmd-pill"><code>sentinel fix-antipatterns</code> <span>— fix dangerous code patterns (yaml.load, pickle, shell=True) without a CVE trigger</span></div>
+        </div>
         <div class="sentinel-steps">
           <div class="step"><span class="step-num">1</span><span>Forks the repo and resolves the full dependency tree, including transitive CVEs via OSV API</span></div>
-          <div class="step"><span class="step-num">2</span><span>Patches build files <em>and</em> dangerous call sites in source code via LLM</span></div>
-          <div class="step"><span class="step-num">3</span><span>Verifies the build passes in an isolated Docker sandbox</span></div>
-          <div class="step"><span class="step-num">4</span><span>Opens a pull request — no human in the loop</span></div>
+          <div class="step"><span class="step-num">2</span><span>Identifies dangerous call sites using a Semgrep-backed dynamic knowledge base; falls back to LLM pattern detection for novel CVEs</span></div>
+          <div class="step"><span class="step-num">3</span><span>Patches build files <em>and</em> source code via multi-provider LLM inference (Anthropic Claude, Google Gemini, or local Ollama)</span></div>
+          <div class="step"><span class="step-num">4</span><span>Verifies the build passes in an isolated Docker sandbox; feeds compiler errors back for up to 3 self-correcting retries</span></div>
+          <div class="step"><span class="step-num">5</span><span>Opens a pull request — no human in the loop</span></div>
         </div>
+        <div class="sentinel-inference">
+          <p class="sentinel-prs-label">LLM Inference</p>
+          <p class="sentinel-otel-desc">Three provider backends selected at runtime from environment variables — no code changes needed to switch.</p>
+          <div class="inference-grid">
+            <div class="inference-card">
+              <p class="inference-card-title">☁️ Anthropic Claude</p>
+              <p class="inference-card-body">Default cloud provider (<code>claude-opus-4-8</code>). Uses ephemeral <code>cache_control</code> to cache stable context (rules + file contents) across retries — saves 80–90% on input-token costs per retry.</p>
+            </div>
+            <div class="inference-card">
+              <p class="inference-card-title">☁️ Google Gemini</p>
+              <p class="inference-card-body">Cost-effective alternative (<code>gemini-2.5-flash</code>). Activated via <code>GEMINI_API_KEY</code> or <code>LLM_PROVIDER=gemini</code>.</p>
+            </div>
+            <div class="inference-card">
+              <p class="inference-card-title">🖥️ Local / Ollama</p>
+              <p class="inference-card-body">Fully offline via <code>SENTINEL_LOCAL_MODEL</code>. Runs any Ollama model — including the fine-tuned <strong>sentinel-patcher-7b</strong> — through the OpenAI-compatible API. No API key required.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sentinel-mlops">
+          <p class="sentinel-prs-label">MLOps / Fine-tuning Pipeline</p>
+          <p class="sentinel-otel-desc">Sentinel can improve its own patch quality over time via a full LoRA/QLoRA fine-tuning loop.</p>
+          <div class="sentinel-steps" style="margin-bottom:0">
+            <div class="step"><span class="step-num">1</span><span>Training data collected from OSV vulnerability database and verified GitHub patch history</span></div>
+            <div class="step"><span class="step-num">2</span><span>LoRA/QLoRA fine-tuning on Modal GPU cloud produces <strong>sentinel-patcher-7b</strong></span></div>
+            <div class="step"><span class="step-num">3</span><span>Model exported to GGUF format and deployed locally via Ollama — zero-latency, zero API cost</span></div>
+            <div class="step"><span class="step-num">4</span><span>Quality gate CI evaluates patch accuracy before promoting the new model to production</span></div>
+          </div>
+        </div>
+
         <div class="sentinel-prs">
           <p class="sentinel-prs-label">Live PRs</p>
           <div class="pr-links">
@@ -105,7 +141,12 @@
           <span class="tag">OpenTelemetry</span>
           <span class="tag">Anthropic Claude</span>
           <span class="tag">Google Gemini</span>
+          <span class="tag">Ollama</span>
           <span class="tag">OSV API</span>
+          <span class="tag">Semgrep</span>
+          <span class="tag">Modal</span>
+          <span class="tag">LoRA/QLoRA</span>
+          <span class="tag">GGUF</span>
           <span class="tag">PyPI</span>
         </div>
       </div>
@@ -151,6 +192,15 @@
           <div class="tags">
             <span class="tag">Postgres</span><span class="tag">YugabyteDB</span>
             <span class="tag">Redis</span><span class="tag">MongoDB</span><span class="tag">MySQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 class="skill-group-title">AI / LLM Inference</h3>
+          <div class="tags">
+            <span class="tag">Anthropic Claude API</span><span class="tag">Google Gemini API</span>
+            <span class="tag">Ollama</span><span class="tag">Prompt Caching</span>
+            <span class="tag">LoRA/QLoRA</span><span class="tag">Modal</span>
+            <span class="tag">GGUF</span><span class="tag">Semgrep</span>
           </div>
         </div>
       </div>
@@ -426,6 +476,34 @@
   }
   .pr-badge.python { background: #fef3c7; color: #92400e; }
   .pr-badge.java { background: #fee2e2; color: #991b1b; }
+
+  /* Commands */
+  .sentinel-commands { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .cmd-pill {
+    display: flex; align-items: baseline; gap: 10px;
+    background: var(--bg-alt); border: 1px solid var(--border);
+    border-radius: 7px; padding: 9px 14px; font-size: 0.88rem;
+  }
+  .cmd-pill code {
+    font-family: monospace; font-size: 0.82rem; color: var(--accent);
+    background: var(--accent-light); padding: 2px 7px; border-radius: 4px; white-space: nowrap;
+  }
+  .cmd-pill span { color: var(--text-soft); }
+
+  /* Inference providers */
+  .sentinel-inference { margin-bottom: 22px; }
+  .inference-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+  .inference-card {
+    background: var(--bg-alt); border: 1px solid var(--border);
+    border-radius: 7px; padding: 14px 16px;
+  }
+  .inference-card-title { font-size: 0.83rem; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+  .inference-card-body { font-size: 0.8rem; color: var(--text-soft); line-height: 1.55; }
+  .inference-card-body code { font-size: 0.76rem; background: var(--border); padding: 1px 5px; border-radius: 3px; color: var(--accent); font-family: monospace; }
+  @media (max-width: 720px) { .inference-grid { grid-template-columns: 1fr; } }
+
+  /* MLOps */
+  .sentinel-mlops { margin-bottom: 22px; }
 
   /* OTel */
   .sentinel-otel { margin-bottom: 22px; }
